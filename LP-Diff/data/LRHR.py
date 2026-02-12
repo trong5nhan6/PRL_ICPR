@@ -30,7 +30,12 @@ class LRHRDataset(Dataset):
         for folder in lr_folders:
             self.lr.append(sorted(glob(os.path.join(self.files_lr, folder, '*.jpg')), key=self.extract_number))
             if self.has_gt:
-                self.hr.extend(glob(os.path.join(self.files_hr, folder, '*.jpg')))
+                hr_list = glob(os.path.join(self.files_hr, folder, '*.jpg'))
+                if len(hr_list) == 0:
+                    raise ValueError(f"No HR found for {folder}")
+
+        # chỉ lấy 1 HR image tương ứng folder
+        self.hr.append(hr_list[0])
             
         if self.has_gt:    
             assert len(self.lr) == len(self.hr)
@@ -46,13 +51,9 @@ class LRHRDataset(Dataset):
         logger.info(f'Has GT: {self.has_gt}')
         
     def extract_number(self, file_path):
-        match = re.search(r'img_(\d+).jpg', os.path.basename(file_path))
-        if match:
-            return int(match.group(1))
-        else:
-            print('Sort Error at: ', file_path)
-            return -1
-
+        filename = os.path.basename(file_path)
+        numbers = re.findall(r'\d+', filename)
+        return int(numbers[-1]) if numbers else -1
 
     def __len__(self):
         return len(self.lr)
