@@ -28,14 +28,19 @@ class LRHRDataset(Dataset):
         self.hr = []
         
         for folder in lr_folders:
-            self.lr.append(sorted(glob(os.path.join(self.files_lr, folder, '*.png')), key=self.extract_number))
+            lr_list = glob(os.path.join(self.files_lr, folder, '*.*'))
+            lr_list = [f for f in lr_list if f.lower().endswith(('.png','.jpg','.jpeg'))]
+            lr_list = sorted(lr_list, key=self.extract_number)
+            self.lr.append(lr_list)
+
             if self.has_gt:
-                hr_list = glob(os.path.join(self.files_hr, folder, '*.png'))
+                hr_list = glob(os.path.join(self.files_hr, folder, '*.*'))
+                hr_list = [f for f in hr_list if f.lower().endswith(('.png','.jpg','.jpeg'))]
+
                 if len(hr_list) == 0:
                     raise ValueError(f"No HR found for {folder}")
 
-        # chỉ lấy 1 HR image tương ứng folder
-        self.hr.append(hr_list[0])
+                self.hr.append(hr_list[0])   # ← PHẢI NẰM TRONG LOOP
             
         if self.has_gt:    
             assert len(self.lr) == len(self.hr)
