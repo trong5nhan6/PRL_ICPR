@@ -28,9 +28,9 @@ class LRHRDataset(Dataset):
         self.hr = []
         
         for folder in lr_folders:
-            self.lr.append(sorted(glob(os.path.join(self.files_lr, folder, '*.jpg')), key=self.extract_number))
+            self.lr.append(sorted(glob(os.path.join(self.files_lr, folder, '*.png')), key=self.extract_number))
             if self.has_gt:
-                hr_list = glob(os.path.join(self.files_hr, folder, '*.jpg'))
+                hr_list = glob(os.path.join(self.files_hr, folder, '*.png'))
                 if len(hr_list) == 0:
                     raise ValueError(f"No HR found for {folder}")
 
