@@ -17,16 +17,16 @@
             "name": "MDLP",
             "mode": "LRHR", 
             "dataroot": "D:/ghy/python_project/SR/dataset/dataset",
-            "width": 224,
-            "height": 112,
+            "width": 128,
+            "height": 64,
             "batch_size": 20,
             "num_workers": 0
         },
         "val": {
             "name": "MDLP",
             "mode": "LRHR",
-            "width": 224,
-            "height": 112,
+            "width": 128,
+            "height": 64,
             "dataroot": "D:/ghy/python_project/SR/dataset/dataset"
         }
     },
