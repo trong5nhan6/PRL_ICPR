@@ -19,7 +19,7 @@
             "dataroot": "D:/ghy/python_project/SR/dataset/dataset",
             "width": 128,
             "height": 64,
-            "batch_size": 20,
+            "batch_size": 32,
             "num_workers": 0
         },
         "val": {
